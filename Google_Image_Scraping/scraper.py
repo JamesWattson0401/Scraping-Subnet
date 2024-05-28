@@ -23,7 +23,7 @@ COOKIES_TEXT = "//span[text()='Accept all'] | //div[text()='Accept all']"
 MORE_BUTTON_1 = "//span[text()='Accept all'] | //div[text()='Accept all']"
 
 
-class Scraper:
+class ImageScraper:
 
     def __init__(self, image_name, directory=DIR):
         print(image_name, directory)

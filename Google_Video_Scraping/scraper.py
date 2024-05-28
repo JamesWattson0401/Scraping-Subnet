@@ -18,7 +18,7 @@ SCROLL_TIMEOUT = 10
 DIR = 'videos'
 NUM_PAGES = 10
 
-class Scraper:
+class VideoScraper:
 
     def __init__(self, search_query, directory=DIR):
         chrome_options = webdriver.ChromeOptions()

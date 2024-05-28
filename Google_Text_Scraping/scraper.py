@@ -16,7 +16,7 @@ COOKIE_ACCEPT_XPATHS = [
 SCROLL_TIMEOUT = 10
 DIR = 'texts'
 
-class Scraper:
+class TextScraper:
 
     def __init__(self, search_query, directory=DIR):
         chrome_options = webdriver.ChromeOptions()
