@@ -25,8 +25,8 @@ MORE_BUTTON_1 = "//span[text()='Accept all'] | //div[text()='Accept all']"
 
 class ImageScraper:
 
-    def __init__(self, image_name, directory=DIR):
-        print(image_name, directory)
+    def __init__(self, search_query, directory=DIR):
+        print(search_query, directory)
 
         chrome_options = webdriver.ChromeOptions()
         #chrome_options.add_argument("--headless")
@@ -34,10 +34,9 @@ class ImageScraper:
         chrome_options.add_argument("--lang=en-GB")
 
         self.dir = directory
-        self.name = image_name
-        self.endpoint = f'https://www.google.com/search?rlz=1C1YTUH_plPL1051PL1051&q={self.name}&tbm=isch&sa=X&ved' \
-                        f'=2ahUKEwjXg4Phle3_AhWQgSoKHb78AW0Q0pQJegQICxAB&biw=1182&bih=754&dpr=1.25 '
-        self.path = f'{self.dir}\\{self.name}'
+        self.query = search_query.replace(' ', '+')
+        self.endpoint = f'https://www.google.com/search?tbm=isch&q={self.query}'
+        self.path = os.path.join(self.dir, self.query)
         print(self.path)
 
         self.driver = webdriver.Chrome(options=chrome_options)
@@ -70,11 +69,9 @@ class ImageScraper:
     def scroll_down(self):
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         
-
-
     def execute_and_encode(self):
         try:
-            os.mkdir(self.path)
+            os.makedirs(self.path, exist_ok=True)
         except OSError as error:
             print(error)
 
@@ -109,7 +106,7 @@ class ImageScraper:
                 #print(extension)
 
                 to_decode = img_src.split(f'data:image/{extension};base64,')
-                im_path = self.path + f'\\{self.name}{counter}'
+                im_path = self.path + f'\\{self.query}{counter}'
                 if len(to_decode) > 1:
                     with open(im_path + f'.jpg', 'wb') as file:
                         file.write(base64.b64decode(to_decode[1]))
